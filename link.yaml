@@ -1,5 +1,6 @@
 ---
 '.tmux.conf': 'tmux.conf'
+'.tmux': 'tmux'
 '.vimrc': 'vimrc'
 '.vim': 'vim'
 '.gitconfig': 'gitconfig'
@@ -10,3 +11,4 @@
 '.config/bin': 'bin'
 '.lein': 'lein'
 '.gdbinit': 'gdbinit'
+'.gemrc': 'gemrc'

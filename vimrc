@@ -30,14 +30,22 @@ filetype plugin indent on
 let mapleader=","
 noremap \ ,
 
-set number
+set rnu
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
 set hlsearch
 set noswapfile
+set nobackup
 set hidden
+set smartcase
+set smarttab
+set incsearch
+set visualbell
+set noerrorbells
+set exrc " enable per-directory .vimrc files
+
 
 set listchars=tab:→\ ,trail:×
 set list
@@ -62,8 +70,13 @@ highlight PmenuSel     ctermbg=3   ctermfg=1
 highlight SpellBad     ctermbg=0   ctermfg=1
 
 hi SpecialKey ctermfg=59 ctermbg=235 cterm=bold
+hi Search guifg=NONE guibg=NONE gui=underline ctermfg=NONE ctermbg=NONE cterm=underline
 
-nnoremap <leader><space> :noh<cr>
+" Clear the search buffer when hitting return
+:nnoremap <CR> :nohlsearch<cr>
+"
+" " Make . in visual mode work as in normal mode
+xnoremap . :norm.<CR>
 
 "CtrlP stuff
 let g:ctrlp_map = '<c-p>'
@@ -150,7 +163,3 @@ noremap <up> <nop>
 noremap <down> <nop>
 noremap <left> <nop>
 noremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
