@@ -10,13 +10,16 @@
   frob = !git rebase -i "$(git merge-base @ origin/master)"
   co-green = !git checkout "$(script/ci_last_green_master)"
   rebase-green = !git rebase "$(script/ci_last_green_master)"
+  amend = commit --amend -C @
+[branch]
+  autosetuprebase = always
 [push]
-  default = simple
+  default = current
 [pull]
   rebase = true
 [color]
   ui = true
 [user]
-  name = Simon Génier
-  email = simon.genier@shopify.com
+  name = Guillaume Malette
+  email = guillaume@shopify.com
 
