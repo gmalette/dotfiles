@@ -21,6 +21,8 @@ export TZ=America/Montreal
 
 export GOBIN="$GOPATH/bin"
 
+setopt ignoreeof
+
 fixssh() {
   for key in SSH_AUTH_SOCK SSH_CONNECTION SSH_CLIENT; do
     if (tmux show-environment | grep "^${key}" > /dev/null); then
@@ -28,4 +30,19 @@ fixssh() {
       export ${key}="${value}"
     fi
   done
+}
+
+function be {
+  bundle check || bundle install && bundle exec $@
+}
+
+function rt {
+  if grep -q "spring-commands-testunit" Gemfile; then
+
+bundle check || bundle install && bundle exec spring testunit $@
+
+  else
+bundle check || bundle install && bundle exec ruby -Itest $@
+
+  fi
 }

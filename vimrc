@@ -23,6 +23,7 @@ Plugin 'tpope/vim-fireplace'
 Plugin 'vim-scripts/paredit.vim'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'othree/html5.vim'
+Plugin 'tpope/vim-fugitive.git'
 
 call vundle#end()
 filetype plugin indent on
@@ -39,21 +40,25 @@ set hlsearch
 set noswapfile
 set nobackup
 set hidden
+set ignorecase
 set smartcase
 set smarttab
 set incsearch
 set visualbell
 set noerrorbells
 set exrc " enable per-directory .vimrc files
-
+set secure " disable unsafe commands in local .vimrc files
+" default splits to right and bottom
+set splitbelow
+set splitright
 
 set listchars=tab:→\ ,trail:×
 set list
 
 syntax on
 
-set background=dark
-colorscheme base16-railscasts
+set t_Co=256q
+colorscheme mustang
 highlight clear SignColumn
 highlight VertSplit    ctermbg=236
 highlight ColorColumn  ctermbg=237
@@ -72,6 +77,10 @@ highlight SpellBad     ctermbg=0   ctermfg=1
 hi SpecialKey ctermfg=59 ctermbg=235 cterm=bold
 hi Search guifg=NONE guibg=NONE gui=underline ctermfg=NONE ctermbg=NONE cterm=underline
 
+" highlight current line
+set cursorline
+hi CursorLine term=none cterm=none
+
 " Clear the search buffer when hitting return
 :nnoremap <CR> :nohlsearch<cr>
 "
@@ -79,7 +88,18 @@ hi Search guifg=NONE guibg=NONE gui=underline ctermfg=NONE ctermbg=NONE cterm=un
 xnoremap . :norm.<CR>
 
 "CtrlP stuff
-let g:ctrlp_map = '<c-p>'
+nnoremap <leader>t :CtrlP<CR>
+
+" reselect visual block after indent/outdent
+vnoremap < <gv
+vnoremap > >gv
+
+" safe paste
+map <Leader>p :set invpaste<CR>i
+
+" disable paste when leaving insert mode
+au InsertLeave * set nopaste
+
 let g:ctrlp_working_path_mode = 'ra'
 let g:path_to_matcher = "matcher"
 let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files . -co --exclude-standard']
@@ -109,6 +129,29 @@ endfunction
 nmap <Leader>a yiw:Ag --ignore '*.a' <C-r>"<cr>
 
 autocmd BufWritePre * :%s/\s\+$//e
+" resize splits when the window is resized
+au VimResized * exe "normal! \<c-w>="
+
+map <Leader>1 :tabn 1<CR>
+map <Leader>2 :tabn 2<CR>
+map <Leader>3 :tabn 3<CR>
+map <Leader>4 :tabn 4<CR>
+map <Leader>5 :tabn 5<CR>
+map <Leader>6 :tabn 6<CR>
+map <Leader>7 :tabn 7<CR>
+map <Leader>8 :tabn 8<CR>
+map <Leader>9 :tabn 9<CR>
+map <Leader>0 :tab split<CR>
+
+" auto complete
+function! SuperTab()
+    if (strpart(getline('.'),col('.')-2,1)=~'^\W\?$')
+        return "\<Tab>"
+    else
+        return "\<C-P>"
+    endif
+endfunction
+imap <Tab> <C-R>=SuperTab()<CR>
 
 " Go
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=2 shiftwidth=2 softtabstop=2
@@ -122,7 +165,7 @@ autocmd FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 
 autocmd FileType go nmap <leader>r <Plug>(go-run)
 autocmd FileType go nmap <leader>b <Plug>(go-build)
-autocmd FileType go nmap <leader>t <Plug>(go-test)
+" autocmd FileType go nmap <leader>t <Plug>(go-test)
 autocmd FileType go nmap <leader>c <Plug>(go-coverage)
 
 autocmd FileType go nmap <Leader>ds <Plug>(go-def-split)
