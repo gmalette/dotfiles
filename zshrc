@@ -32,6 +32,7 @@ fixssh() {
   done
 }
 
+unalias be
 function be {
   bundle check || bundle install && bundle exec $@
 }

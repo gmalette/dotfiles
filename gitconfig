@@ -22,4 +22,5 @@
 [user]
   name = Guillaume Malette
   email = guillaume@shopify.com
-
+[help]
+  autocorrect = 5
