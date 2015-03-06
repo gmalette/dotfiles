@@ -2,6 +2,7 @@ export PATH="$HOME/.config/bin/$(uname -s)-$(uname -m):$HOME/.config/bin/any:/us
 export PATH="$HOME/.config/powerline/src/scripts:$PATH"
 
 export ZSH=$HOME/.oh-my-zsh
+unset DISPLAY
 
 ZSH_CUSTOM=$HOME/.oh-my-zsh-custom
 ZSH_THEME="sgnr"
@@ -47,3 +48,10 @@ bundle check || bundle install && bundle exec ruby -Itest $@
 
   fi
 }
+
+NEW_SSH_AUTH_SOCK="$HOME/.ssh/auth-sock"
+if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $NEW_SSH_AUTH_SOCK ]; then
+  rm -f $NEW_SSH_AUTH_SOCK
+  ln -sf $SSH_AUTH_SOCK $NEW_SSH_AUTH_SOCK
+  export SSH_AUTH_SOCK=$NEW_SSH_AUTH_SOCK
+fi
