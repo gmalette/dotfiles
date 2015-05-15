@@ -55,6 +55,9 @@ set splitright
 set listchars=tab:→\ ,trail:×
 set list
 
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#branch#enabled = 0
+
 syntax on
 
 set t_Co=256q
@@ -199,6 +202,9 @@ let g:rbpt_colorpairs = [
   \ ['darkred',     'DarkOrchid3'],
   \ ['red',         'firebrick3'],
   \ ]
+
+" Markdown
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 " Live it
 
