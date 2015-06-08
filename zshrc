@@ -50,9 +50,10 @@ bundle check || bundle install && bundle exec ruby -Itest $@
   fi
 }
 
-NEW_SSH_AUTH_SOCK="$HOME/.ssh/auth-sock"
+NEW_SSH_AUTH_SOCK="$HOME/.ssh/auth-sock/auth-sock"
 if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $NEW_SSH_AUTH_SOCK ]; then
+  mkdir -p "$(dirname "$NEW_SSH_AUTH_SOCK")"
   rm -f $NEW_SSH_AUTH_SOCK
   ln -sf $SSH_AUTH_SOCK $NEW_SSH_AUTH_SOCK
-  export SSH_AUTH_SOCK=$NEW_SSH_AUTH_SOCK
 fi
+export SSH_AUTH_SOCK=$NEW_SSH_AUTH_SOCK

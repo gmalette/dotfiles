@@ -24,6 +24,7 @@ Plugin 'vim-scripts/paredit.vim'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'othree/html5.vim'
 Plugin 'tpope/vim-fugitive.git'
+Plugin 'groenewege/vim-less'
 
 call vundle#end()
 filetype plugin indent on
