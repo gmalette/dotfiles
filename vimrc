@@ -25,6 +25,8 @@ Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'othree/html5.vim'
 Plugin 'tpope/vim-fugitive.git'
 Plugin 'groenewege/vim-less'
+Plugin 'isRuslan/vim-es6'
+
 
 call vundle#end()
 filetype plugin indent on
@@ -84,6 +86,10 @@ hi Search guifg=NONE guibg=NONE gui=underline ctermfg=NONE ctermbg=NONE cterm=un
 " highlight current line
 set cursorline
 hi CursorLine term=none cterm=none
+
+" mouse clicks
+set mouse=a
+set ttymouse=xterm
 
 " Clear the search buffer when hitting return
 :nnoremap <CR> :nohlsearch<cr>
@@ -176,7 +182,16 @@ autocmd FileType go nmap <Leader>ds <Plug>(go-def-split)
 autocmd FileType go nmap <Leader>dv <Plug>(go-def-vertical)
 
 " JS
-let g:syntastic_jslint_checkers=['jslint']
+let g:syntastic_javascript_checkers = ['eslint']
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 " Clojure
 
