@@ -11,6 +11,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'kien/ctrlp.vim'
 Plugin 'bling/vim-airline.git'
 Plugin 'scrooloose/syntastic'
+Bundle 'scrooloose/nerdtree'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'fatih/vim-go'
 Plugin 'wting/rust.vim'
@@ -26,7 +27,7 @@ Plugin 'othree/html5.vim'
 Plugin 'tpope/vim-fugitive.git'
 Plugin 'groenewege/vim-less'
 Plugin 'isRuslan/vim-es6'
-
+Plugin 'elixir-lang/vim-elixir'
 
 call vundle#end()
 filetype plugin indent on
@@ -109,6 +110,14 @@ map <Leader>p :set invpaste<CR>i
 
 " disable paste when leaving insert mode
 au InsertLeave * set nopaste
+
+" Allow macros over visual range
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
 
 let g:ctrlp_working_path_mode = 'ra'
 let g:path_to_matcher = "matcher"
@@ -196,6 +205,12 @@ let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+" NERDTree
+nmap <leader>n :NERDTreeToggle<CR>
+let NERDTreeHighlightCursorline=1
+let NERDTreeQuitOnOpen=1
+let NERDTreeIgnore = ['tmp', '.yardoc', 'pkg']
 
 " Clojure
 
