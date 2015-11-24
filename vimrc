@@ -163,6 +163,10 @@ function! SuperTab()
 endfunction
 imap <Tab> <C-R>=SuperTab()<CR>
 
+" Ruby
+autocmd BufNewFile,BufRead *.mrb set filetype=ruby
+
+
 " Go
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=2 shiftwidth=2 softtabstop=2
 
