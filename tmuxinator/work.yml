@@ -1,0 +1,12 @@
+# ~/.tmuxinator/work.yml
+
+<% root = @settings['ws'] || Dir.pwd %>
+name: <%= File.basename(root) %>
+root: <%= root %>
+
+startup_window: editor
+
+windows:
+  - server:
+  - editor: vim .
+  - sandbox:

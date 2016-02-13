@@ -23,3 +23,6 @@ YAML.load_file(link_spec_path.realpath).each_pair do |target, source|
   puts "Linking '#{target_path}' -> '#{source_path}'."
   File.symlink(source_path.realpath, target_path)
 end
+
+puts "Installing packages"
+system((src_root + 'packages').realpath.to_s)

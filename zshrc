@@ -57,3 +57,6 @@ if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $NEW_SSH_AUTH_SOCK ]; then
   ln -sf $SSH_AUTH_SOCK $NEW_SSH_AUTH_SOCK
 fi
 export SSH_AUTH_SOCK=$NEW_SSH_AUTH_SOCK
+
+export NVM_DIR="/home/vagrant/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
