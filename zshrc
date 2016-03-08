@@ -15,6 +15,7 @@ plugins=(git vagrant lein bundler golang)
 source $ZSH/oh-my-zsh.sh
 
 alias g="grep -rnI --exclude='*.a'"
+eval "$(rbenv init -)"
 
 export EDITOR=vim
 export PRY=1
@@ -58,5 +59,4 @@ if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $NEW_SSH_AUTH_SOCK ]; then
 fi
 export SSH_AUTH_SOCK=$NEW_SSH_AUTH_SOCK
 
-export NVM_DIR="/home/vagrant/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+source /opt/dev/dev.sh
