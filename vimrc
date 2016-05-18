@@ -55,6 +55,7 @@ set secure " disable unsafe commands in local .vimrc files
 " default splits to right and bottom
 set splitbelow
 set splitright
+set clipboard=unnamed
 
 set listchars=tab:→\ ,trail:×
 set list
