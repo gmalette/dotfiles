@@ -13,3 +13,4 @@
 '.gdbinit': 'gdbinit'
 '.gemrc': 'gemrc'
 '.tmuxinator': 'tmuxinator'
+'.emacs.d': 'emacs.d'
