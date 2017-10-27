@@ -6,28 +6,32 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 
-Plugin 'tpope/vim-sensible.git'
-Plugin 'tpope/vim-commentary'
-Plugin 'kien/ctrlp.vim'
 Plugin 'bling/vim-airline.git'
-Plugin 'scrooloose/syntastic'
-Bundle 'scrooloose/nerdtree'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'fatih/vim-go'
-Plugin 'wting/rust.vim'
 Plugin 'cespare/vim-toml'
-Plugin 'hail2u/vim-css3-syntax'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'rking/ag.vim'
+Plugin 'elixir-lang/vim-elixir'
+Plugin 'elmcast/elm-vim'
+Plugin 'fatih/vim-go'
+Plugin 'groenewege/vim-less'
 Plugin 'guns/vim-clojure-static'
-Plugin 'tpope/vim-fireplace'
-Plugin 'vim-scripts/paredit.vim'
+Plugin 'hail2u/vim-css3-syntax'
+Plugin 'isRuslan/vim-es6'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'kien/ctrlp.vim'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'othree/html5.vim'
+Plugin 'rking/ag.vim'
+Plugin 'scrooloose/syntastic'
+Bundle 'scrooloose/nerdtree'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-fireplace'
 Plugin 'tpope/vim-fugitive.git'
-Plugin 'groenewege/vim-less'
-Plugin 'isRuslan/vim-es6'
-Plugin 'elixir-lang/vim-elixir'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-sensible.git'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'vim-scripts/paredit.vim'
+Plugin 'wting/rust.vim'
+Plugin 'rhysd/vim-rustpeg'
+Plugin 'terryma/vim-multiple-cursors'
 
 call vundle#end()
 filetype plugin indent on
@@ -105,6 +109,10 @@ nnoremap <leader>t :CtrlP<CR>
 " reselect visual block after indent/outdent
 vnoremap < <gv
 vnoremap > >gv
+
+" Begenning and end of line
+nnoremap H ^
+nnoremap L $
 
 " safe paste
 map <Leader>p :set invpaste<CR>i

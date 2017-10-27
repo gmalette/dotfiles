@@ -2,6 +2,7 @@
 '.tmux.conf': 'tmux.conf'
 '.tmux': 'tmux'
 '.vimrc': 'vimrc'
+'.ideavimrc': 'ideavimrc'
 '.vim': 'vim'
 '.gitconfig': 'gitconfig'
 '.gitignore': 'gitignore'
@@ -14,3 +15,4 @@
 '.gemrc': 'gemrc'
 '.tmuxinator': 'tmuxinator'
 '.emacs.d': 'emacs.d'
+'.spacemacs': 'spacemacs'
