@@ -256,3 +256,5 @@ noremap <up> <nop>
 noremap <down> <nop>
 noremap <left> <nop>
 noremap <right> <nop>
+
+inoremap kj <Esc>

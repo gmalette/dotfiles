@@ -7,6 +7,7 @@
   co = checkout
   st = status --short
   br = branch
+  clbr = "!f() { git fetch --prune && git branch --merged origin/master | grep -v ^* | grep -v '^  master$' | xargs git branch -d && for branch in `git branch -vv | grep -v ^* | awk '/: gone]/ {print $1}'`; do git branch -D $branch; done }; f"
   frob = !git rebase -i "$(git merge-base @ origin/master)"
   squash = !HEAD_COMMIT=$(git rev-list @ -n 1) BASE_COMMIT=$(git merge-base @ origin/master) && git reset --soft $BASE_COMMIT && git commit --reuse-message=$HEAD_COMMIT~$[$(git rev-list $BASE_COMMIT..$HEAD_COMMIT --count)-1] --edit
   co-green = !git checkout "$(script/ci_last_green_master)"
@@ -32,6 +33,9 @@
   cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [merge]
   tool = Kaleidoscope
+  conflictstyle = diff3
 [mergetool "Kaleidoscope"]
   cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
   trustExitCode = true
+[fetch]
+  prune = true

@@ -1,0 +1,144 @@
+set nocompatible
+set surround
+filetype off
+
+filetype plugin indent on
+
+nnoremap <space>] :action GotoImplementation<cr>
+nnoremap <space>[ :action GotoSuperMethod<cr>
+nnoremap <space>u :action FindUsages<cr>
+nnoremap <space>gt :action GotoTest<cr>
+nnoremap <space>k :action HighlightUsagesInFile<cr>
+
+noremap \ ,
+
+set rnu
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+set hlsearch
+set noswapfile
+set nobackup
+set hidden
+set ignorecase
+set smartcase
+set smarttab
+set incsearch
+set visualbell
+set noerrorbells
+set secure " disable unsafe commands in local .vimrc files
+" default splits to right and bottom
+set splitbelow
+set splitright
+set clipboard=unnamed
+
+set listchars=tab:→\ ,trail:×
+set list
+
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#branch#enabled = 0
+
+syntax on
+
+set t_Co=256q
+colorscheme mustang
+highlight clear SignColumn
+highlight VertSplit    ctermbg=236
+highlight ColorColumn  ctermbg=237
+highlight LineNr       ctermbg=236 ctermfg=240
+highlight CursorLineNr ctermbg=236 ctermfg=240
+highlight CursorLine   ctermbg=236
+highlight StatusLineNC ctermbg=238 ctermfg=0
+highlight StatusLine   ctermbg=240 ctermfg=12
+highlight IncSearch    ctermbg=3   ctermfg=1
+highlight Search       ctermbg=1   ctermfg=3
+highlight Visual       ctermbg=3   ctermfg=0
+highlight Pmenu        ctermbg=240 ctermfg=12
+highlight PmenuSel     ctermbg=3   ctermfg=1
+highlight SpellBad     ctermbg=0   ctermfg=1
+
+hi SpecialKey ctermfg=59 ctermbg=235 cterm=bold
+hi Search guifg=NONE guibg=NONE gui=underline ctermfg=NONE ctermbg=NONE cterm=underline
+
+" highlight current line
+set cursorline
+hi CursorLine term=none cterm=none
+
+" mouse clicks
+" set mouse=a
+" set ttymouse=xterm
+
+" Clear the search buffer when hitting return
+:nnoremap <CR> :nohlsearch<cr>
+"
+" " Make . in visual mode work as in normal mode
+xnoremap . :norm.<CR>
+
+
+" reselect visual block after indent/outdent
+vnoremap < <gv
+vnoremap > >gv
+
+" Begenning and end of line
+nnoremap H ^
+nnoremap L $
+
+" disable paste when leaving insert mode
+au InsertLeave * set nopaste
+
+" Allow macros over visual range
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
+
+autocmd BufWritePre * :%s/\s\+$//e
+" resize splits when the window is resized
+au VimResized * exe "normal! \<c-w>="
+
+" Ruby
+autocmd BufNewFile,BufRead *.mrb set filetype=ruby
+
+
+" Go
+autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=2 shiftwidth=2 softtabstop=2
+
+
+" Clojure
+
+autocmd FileType clojure setlocal lispwords+=go-loop
+
+autocmd FileType clojure :RainbowParenthesesToggle
+autocmd FileType clojure :RainbowParenthesesLoadRound
+autocmd FileType clojure :RainbowParenthesesLoadSquare
+autocmd FileType clojure :RainbowParenthesesLoadBraces
+let g:rbpt_colorpairs = [
+  \ ['brown',       'RoyalBlue3'],
+  \ ['Darkblue',    'SeaGreen3'],
+  \ ['darkgray',    'DarkOrchid3'],
+  \ ['darkgreen',   'firebrick3'],
+  \ ['darkcyan',    'RoyalBlue3'],
+  \ ['darkred',     'SeaGreen3'],
+  \ ['brown',       'firebrick3'],
+  \ ['gray',        'RoyalBlue3'],
+  \ ['black',       'SeaGreen3'],
+  \ ['darkmagenta', 'DarkOrchid3'],
+  \ ['Darkblue',    'firebrick3'],
+  \ ['darkgreen',   'RoyalBlue3'],
+  \ ['darkcyan',    'SeaGreen3'],
+  \ ['darkred',     'DarkOrchid3'],
+  \ ['red',         'firebrick3'],
+  \ ]
+
+" Markdown
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
+" Live it
+
+noremap <up> <nop>
+noremap <down> <nop>
+noremap <left> <nop>
+noremap <right> <nop>
