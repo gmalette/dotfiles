@@ -15,6 +15,8 @@ zstyle -s ":vcs_info:git:*:-all-" "command" _omz_git_git_cmd
 
 source $ZSH/oh-my-zsh.sh
 
+source /usr/local/opt/chruby/share/chruby/chruby.sh
+
 export EDITOR=vim
 alias vi=vim
 export PRY=1
@@ -27,12 +29,14 @@ export GOBIN="$GOPATH/bin"
 
 setopt ignoreeof
 
-unalias be
+unalias be 2>/dev/null
 function be {
   bundle check || bundle install && bundle exec $@
 }
 
-source /opt/dev/dev.sh
-
 export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
+
+if [ -f /opt/dev/dev.sh ]; then
+  source /opt/dev/dev.sh
+fi
