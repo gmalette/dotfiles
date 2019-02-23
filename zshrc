@@ -21,9 +21,9 @@ export EDITOR=vim
 alias vi=vim
 export PRY=1
 export TZ=America/Montreal
-export GOPATH=$HOME/Documents/Workspaces/Go
-
-export GOBIN="$GOPATH/bin"
+export GOPATH=$HOME/src/.go
+export GOROOT="$(brew --prefix golang)/libexec"
+export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
 [[ -s $HOME/.zshrc.local ]] && source "$HOME/.zshrc.local"
 

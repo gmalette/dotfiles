@@ -1,6 +1,5 @@
 ---
 '.tmux.conf': 'tmux.conf'
-'.tmux': 'tmux'
 '.vimrc': 'vimrc'
 '.ideavimrc': 'ideavimrc'
 '.vim': 'vim'

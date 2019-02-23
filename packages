@@ -2,5 +2,3 @@
 if ! gem list | grep -Fq 'tmuxinator'; then
   gem install tmuxinator
 fi
-
-brew install reattach-to-user-namespace --wrap-pbcopy-and-pbpaste
