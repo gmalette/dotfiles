@@ -1,15 +1,20 @@
 # Setup Homebrew
 which -s brew
+
 if [[ $? != 0 ]] ; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 else
   brew update
 fi
 
-xcode-select --install
+# Setup XCode
+xcode-select -p 1>/dev/null;
+if [[ $? != 0 ]]; then
+  xcode-select --install
+fi
 
 # Install Casks
-/opt/homebrew/bin/brew install --cask \
+/usr/local/bin/brew install --cask \
   1password \
   adafruit-arduino \
   blitz \
@@ -27,3 +32,11 @@ xcode-select --install
   steam \
   transmission \
   vlc
+
+
+/usr/local/bin/brew install \
+  chruby \
+  ruby-install
+
+./link.rb
+git submodule update --init

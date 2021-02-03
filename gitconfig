@@ -2,7 +2,7 @@
   editor = vim
   excludesfile = ~/.gitignore
   pager = less -F -X
-	commitGraph = true
+  commitGraph = true
 [alias]
   ci = commit
   co = checkout
@@ -11,8 +11,6 @@
   clbr = !git branch --merged | ag --invert-match \"\\*|master\" | xargs git branch -d
   frob = !git rebase -i "$(git merge-base @ origin/master)"
   squash = !HEAD_COMMIT=$(git rev-list @ -n 1) BASE_COMMIT=$(git merge-base @ origin/master) && git reset --soft $BASE_COMMIT && git commit --reuse-message=$HEAD_COMMIT~$[$(git rev-list $BASE_COMMIT..$HEAD_COMMIT --count)-1] --edit
-  co-green = !git checkout "$(script/ci_last_green_master)"
-  rebase-green = !git rebase "$(script/ci_last_green_master)"
   amend = commit --amend -C @
 [branch]
   autosetuprebase = always
@@ -30,8 +28,8 @@
 [diff]
   # compactionHeuristic = true
   tool = Kaleidoscope
-	algorithm = patience
-	noprefix = true
+  algorithm = patience
+  noprefix = true
 [difftool "Kaleidoscope"]
   cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [merge]
@@ -42,3 +40,5 @@
   trustExitCode = true
 [fetch]
   prune = true
+[credential]
+  helper = osxkeychain

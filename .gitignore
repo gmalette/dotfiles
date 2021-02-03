@@ -1,5 +1,2 @@
-.netrwhist
 vim/bundle/*
 !vim/bundle/Vundle.vim
-lein/*
-!lein/profiles.clj
