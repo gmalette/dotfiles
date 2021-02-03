@@ -22,16 +22,13 @@
   ui = true
 [user]
   name = Guillaume Malette
-  email = guillaume@shopify.com
+  email = gmalette@gamil.com
 [help]
   autocorrect = 5
 [diff]
   # compactionHeuristic = true
-  tool = Kaleidoscope
   algorithm = patience
   noprefix = true
-[difftool "Kaleidoscope"]
-  cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [merge]
   tool = Kaleidoscope
   conflictstyle = diff3
