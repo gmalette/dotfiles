@@ -7,14 +7,21 @@ else
   brew update
 fi
 
+if [[ -f /opt/homebrew/bin/brew ]]; then
+  brewpath=/opt/homebrew/bin/brew
+else
+  brewpath=/usr/local/bin/brew
+fi
+
 # Setup XCode
 xcode-select -p 1>/dev/null;
 if [[ $? != 0 ]]; then
   xcode-select --install
 fi
 
+
 # Install Casks
-/usr/local/bin/brew install --cask \
+"$brewpath" install --cask \
   1password \
   adafruit-arduino \
   blitz \
