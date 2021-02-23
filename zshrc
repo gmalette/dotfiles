@@ -1,7 +1,8 @@
 export PATH="$HOME/.config/bin/$(uname -s)-$(uname -m):$HOME/.config/bin/any:/usr/local/bin:$GOPATH/bin:$PATH"
 export PATH="$HOME/.config/powerline/src/scripts:$PATH"
-
 export ZSH=$HOME/.oh-my-zsh
+
+[[ -s $HOME/.zshrc.local ]] && source "$HOME/.zshrc.local"
 
 ZSH_CUSTOM=$HOME/.oh-my-zsh-custom
 ZSH_THEME="sgnr"
@@ -24,8 +25,6 @@ export TZ=America/Montreal
 export GOPATH=$HOME/src/.go
 export GOROOT="$(brew --prefix golang)/libexec"
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
-
-[[ -s $HOME/.zshrc.local ]] && source "$HOME/.zshrc.local"
 
 setopt ignoreeof
 

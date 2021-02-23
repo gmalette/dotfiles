@@ -13,6 +13,15 @@ else
   brewpath=/usr/local/bin/brew
 fi
 
+local_source_eval="eval \$($brewpath shellenv)"
+local_source_file=/Users/gmalette/.zshrc.local
+
+if [[ ! -f $local_source_file || ! -z $(grep $brewpath $local_source_file) ]];
+then
+  echo $local_source_eval >> $local_source_file
+fi
+
+
 # Setup XCode
 xcode-select -p 1>/dev/null;
 if [[ $? != 0 ]]; then
