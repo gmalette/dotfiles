@@ -7,6 +7,12 @@ else
   brew update
 fi
 
+which -s rustup
+
+if [[ $? != 0 ]]; then
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+fi
+
 if [[ -f /opt/homebrew/bin/brew ]]; then
   brewpath=/opt/homebrew/bin/brew
 else
@@ -50,8 +56,9 @@ fi
   vlc
 
 
-/usr/local/bin/brew install \
+"$brewpath" install \
   chruby \
+  ripgrep \
   ruby-install
 
 ./link.rb
