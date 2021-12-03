@@ -38,7 +38,7 @@ fi
 # Install Casks
 "$brewpath" install --cask \
   1password \
-  adafruit-arduino \
+  arduino \
   blitz \
   cyberduck \
   daisydisk \

@@ -16,7 +16,7 @@ zstyle -s ":vcs_info:git:*:-all-" "command" _omz_git_git_cmd
 
 source $ZSH/oh-my-zsh.sh
 
-source /usr/local/opt/chruby/share/chruby/chruby.sh
+source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
 
 export EDITOR=vim
 alias vi=vim
