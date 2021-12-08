@@ -8,8 +8,8 @@
   co = checkout
   st = status --short
   clbr = !git branch --merged | rg --invert-match \"\\*|master|main\" | xargs git branch -d
-  frob = !git rebase -i "$(git merge-base @ origin/master)"
-  squash = !HEAD_COMMIT=$(git rev-list @ -n 1) BASE_COMMIT=$(git merge-base @ origin/master) && git reset --soft $BASE_COMMIT && git commit --reuse-message=$HEAD_COMMIT~$[$(git rev-list $BASE_COMMIT..$HEAD_COMMIT --count)-1] --edit
+  frob = !git rebase -i "$(git merge-base @ origin/main)"
+  squash = !HEAD_COMMIT=$(git rev-list @ -n 1) BASE_COMMIT=$(git merge-base @ origin/main) && git reset --soft $BASE_COMMIT && git commit --reuse-message=$HEAD_COMMIT~$[$(git rev-list $BASE_COMMIT..$HEAD_COMMIT --count)-1] --edit
   amend = commit --amend -C @
 [branch]
   autosetuprebase = always

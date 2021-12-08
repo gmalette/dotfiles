@@ -51,15 +51,24 @@ fi
   league-of-legends \
   sequel-pro \
   signal \
+  slack \
   steam \
   transmission \
+  visual-studio-code \
   vlc
 
 
 "$brewpath" install \
   chruby \
   ripgrep \
-  ruby-install
+  ruby-install \
+  yarn
 
 ./link.rb
 git submodule update --init
+
+# Hide recent applications from the dock
+defaults write com.apple.dock show-recents -bool false; killall Dock
+
+# Enable repeating keys instead of using hold for accents
+defaults write -g ApplePressAndHoldEnabled -bool false
