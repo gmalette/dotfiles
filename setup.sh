@@ -49,6 +49,7 @@ fi
   intellij-idea \
   iterm2 \
   league-of-legends \
+  obsidian \
   sequel-pro \
   signal \
   slack \
