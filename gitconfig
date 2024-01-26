@@ -2,7 +2,6 @@
   editor = vim
   excludesfile = ~/.gitignore
   pager = less -F -X
-  commitGraph = true
 [alias]
   ci = commit
   co = checkout
@@ -21,12 +20,11 @@
   ui = true
 [user]
   name = Guillaume Malette
-  email = gmalette@gamil.com
+	email = guillaume.malette@shopify.com
 [help]
   autocorrect = 5
 [diff]
   # compactionHeuristic = true
-  algorithm = patience
   noprefix = true
 [merge]
   tool = Kaleidoscope
@@ -36,5 +34,7 @@
   trustExitCode = true
 [fetch]
   prune = true
-[credential]
-  helper = osxkeychain
+[include]
+	path = /Users/gmalette/.config/dev/gitconfig
+[commit]
+	template = ~/.gitmessage
