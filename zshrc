@@ -12,15 +12,10 @@ CASE_SENSITIVE="true"
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 
-eval "$(starship init zsh)"
-
 export EDITOR=vim
 alias vi=vim
 export PRY=1
 export TZ=America/Montreal
-export GOPATH=$HOME/src/.go
-export GOROOT="$(brew --prefix golang)/libexec"
-export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
 setopt ignoreeof
 
@@ -31,6 +26,8 @@ unalias be 2>/dev/null
 
 export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
+
+eval "$(starship init zsh)"
 
 if [ -f /opt/dev/dev.sh ]; then
   source /opt/dev/dev.sh
