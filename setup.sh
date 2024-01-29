@@ -11,7 +11,8 @@ fi
 which starship
 
 if [[ $? != 0 ]]; then
-  cargo binstall -y \
+  export PATH="$HOME/.cargo/bin:$PATH"
+  cargo-binstall -y \
     starship
 fi
 
