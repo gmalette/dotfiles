@@ -7,6 +7,7 @@ home = Pathname.new(File.expand_path("~"))
 src_root = Pathname.new(File.dirname(__FILE__))
 
 link_spec_path = src_root + 'link.yaml'
+
 YAML.load_file(link_spec_path.realpath).each_pair do |target, source|
   target_path = home + target
 

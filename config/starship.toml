@@ -10,10 +10,10 @@ disabled = true
 [python]
 disabled = true
 
-[ruby]
+[gcloud]
 disabled = true
 
-[gcloud]
+[nodejs]
 disabled = true
 
 [directory]
