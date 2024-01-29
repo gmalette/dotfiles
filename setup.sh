@@ -1,3 +1,5 @@
+#!/bin/bash
+
 which rustup
 
 if [[ $? != 0 ]]; then
