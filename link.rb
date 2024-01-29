@@ -10,13 +10,8 @@ link_spec_path = src_root + 'link.yaml'
 YAML.load_file(link_spec_path.realpath).each_pair do |target, source|
   target_path = home + target
 
-  if target_path.symlink?
-    target_path.unlink
-  end
-
   if target_path.exist?
-    puts "#{target_path} already exists."
-    next
+    target_path.unlink
   end
 
   source_path = src_root + source
