@@ -14,6 +14,7 @@
   autosetuprebase = always
 [push]
 	default = current
+	autoSetupRemote = true
 [pull]
   rebase = true
 [color]
