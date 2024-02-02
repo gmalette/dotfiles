@@ -20,14 +20,13 @@ export TZ=America/Montreal
 setopt ignoreeof
 
 unalias be 2>/dev/null
-#function be {
-#  bundle check || bundle install && bundle exec $@
-#}
 
 export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 
 eval "$(starship init zsh)"
+
+set -o emacs
 
 if [ -f /opt/dev/dev.sh ]; then
   source /opt/dev/dev.sh
