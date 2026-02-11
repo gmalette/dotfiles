@@ -67,11 +67,19 @@
       init.defaultBranch = "main";
     };
 
-    includes = lib.optionals hostCfg.isWork [
+    includes = [
+      # Mutable config for runtime writes (git maintenance register, dev tooling, etc.)
+      { path = "~/.gitconfig"; }
+    ] ++ lib.optionals hostCfg.isWork [
       { path = "~/.config/dev/gitconfig"; }
     ];
   };
 
   # Force overwrite in case existing files conflict
   xdg.configFile."git/ignore".force = true;
+
+  # Ensure mutable gitconfig exists so the include doesn't warn
+  home.activation.ensureMutableGitconfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    touch ~/.gitconfig
+  '';
 }
