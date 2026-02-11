@@ -5,7 +5,7 @@
     enable = true;
     shell = "${pkgs.zsh}/bin/zsh";
     terminal = "tmux-256color";
-    prefix = "C-Space";
+    prefix = "C-s";
     baseIndex = 1;
     escapeTime = 0;
     historyLimit = 50000;
@@ -61,8 +61,8 @@
       bind -r K resize-pane -U 5
       bind -r L resize-pane -R 5
 
-      # Cycle through panes with prefix + C-Space
-      bind C-Space select-pane -t :.+
+      # Cycle through panes with prefix + C-s
+      bind C-s select-pane -t :.+
 
       # Popup shell (tmux 3.2+)
       bind p display-popup -E -w 80% -h 80%
