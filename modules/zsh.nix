@@ -58,6 +58,9 @@
 
         # Don't close terminal on Ctrl-D
         "setopt ignoreeof"
+
+        # Disable C-s/C-q flow control (C-s is tmux prefix)
+        "stty -ixon -ixoff 2>/dev/null"
       ]
       ++ lib.optionals hostCfg.isWork [
         # Shopify dev tools
