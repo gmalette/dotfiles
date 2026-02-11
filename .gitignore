@@ -1,3 +1,5 @@
-vim/bundle/*
-!vim/bundle/Vundle.vim
-vim/.netrwhist
+.DS_Store
+result
+.direnv
+.claude
+CLAUDE.md

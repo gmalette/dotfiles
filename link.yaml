@@ -1,9 +1,0 @@
----
-'.tmux.conf': 'tmux.conf'
-'.vimrc': 'vimrc'
-'.ideavimrc': 'ideavimrc'
-'.vim': 'vim'
-'.gitconfig': 'gitconfig'
-'.gitignore': 'gitignore'
-'.zshrc': 'zshrc'
-'.config/starship.toml': 'config/starship.toml'
