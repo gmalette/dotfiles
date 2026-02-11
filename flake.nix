@@ -45,28 +45,15 @@
         };
       };
 
-      # Helper to build home-manager config for any host
-      mkHomeConfig = hostName: hostCfg: {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          extraSpecialArgs = { inherit hostCfg; };
-          users.${hostCfg.username} = { pkgs, ... }: {
-            home = {
-              username = hostCfg.username;
-              homeDirectory = hostCfg.homeDirectory;
-            };
-            imports = [
-              ./modules/common.nix
-              ./modules/git.nix
-              ./modules/zsh.nix
-              ./modules/tmux.nix
-              ./modules/neovim.nix
-              ./modules/ideavim.nix
-            ];
-          };
-        };
-      };
+      # Shared home-manager module list
+      homeModules = [
+        ./modules/common.nix
+        ./modules/git.nix
+        ./modules/zsh.nix
+        ./modules/tmux.nix
+        ./modules/neovim.nix
+        ./modules/ideavim.nix
+      ];
 
       # Darwin systems (macOS)
       mkDarwinSystem = hostName: hostCfg:
@@ -76,7 +63,21 @@
           modules = [
             home-manager.darwinModules.home-manager
             ./modules/darwin.nix
-            (mkHomeConfig hostName hostCfg)
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                extraSpecialArgs = { inherit hostCfg; };
+                users.${hostCfg.username} = {
+                  home = {
+                    username = hostCfg.username;
+                    homeDirectory = hostCfg.homeDirectory;
+                    stateVersion = "24.11";
+                  };
+                  imports = homeModules;
+                };
+              };
+            }
           ];
         };
 
@@ -85,18 +86,13 @@
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs { system = hostCfg.system; };
           extraSpecialArgs = { inherit hostCfg; };
-          modules = [
-            ./modules/common.nix
-            ./modules/git.nix
-            ./modules/zsh.nix
-            ./modules/tmux.nix
-            ./modules/neovim.nix
-            ./modules/ideavim.nix
+          modules = homeModules ++ [
             ./modules/linux.nix
             {
               home = {
                 username = hostCfg.username;
                 homeDirectory = hostCfg.homeDirectory;
+                stateVersion = "24.11";
               };
             }
           ];
