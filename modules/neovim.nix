@@ -39,7 +39,7 @@
       vim-fugitive      # git integration
     ];
 
-    extraLuaConfig = ''
+    initLua = ''
       -- Sensible defaults
       vim.opt.number = true
       vim.opt.relativenumber = true

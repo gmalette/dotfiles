@@ -27,7 +27,7 @@
       share = true;
     };
 
-    initExtra = lib.concatStringsSep "\n" (
+    initContent = lib.concatStringsSep "\n" (
       [
         # Case-sensitive completion
         ''zstyle ':completion:*' matcher-list "" 'm:{a-zA-Z}={A-Za-z}' ''
