@@ -96,7 +96,7 @@
       git_branch.style = "bold 220";
 
       custom.worldpath = {
-        command = "worldpath";
+        command = "worldpath --full --spare | cut -d@ -f1";
         when = true;
         format = "[$output]($style) ";
         style = "bold cyan";
