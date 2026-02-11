@@ -49,6 +49,9 @@
         }
         ''
 
+        # Extra PATH entries
+        ''export PATH="$HOME/.cargo/bin:$HOME/.local/bin:$PATH"''
+
         # Don't close terminal on Ctrl-D
         "setopt ignoreeof"
       ]

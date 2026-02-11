@@ -32,6 +32,11 @@
         p.regex
       ]))
 
+      # Fuzzy finder
+      telescope-nvim
+      telescope-fzf-native-nvim
+      plenary-nvim
+
       # Quality of life
       vim-surround
       vim-commentary
@@ -40,6 +45,10 @@
     ];
 
     initLua = ''
+      -- Leader key (before any mappings)
+      vim.g.mapleader = ","
+      vim.g.maplocalleader = ","
+
       -- Sensible defaults
       vim.opt.number = true
       vim.opt.relativenumber = true
@@ -96,6 +105,21 @@
           vim.cmd("wincmd =")
         end,
       })
+
+      -- Telescope (fuzzy finder)
+      local telescope = require("telescope")
+      telescope.setup({
+        defaults = {
+          file_ignore_patterns = { "node_modules", ".git/" },
+        },
+      })
+      telescope.load_extension("fzf")
+
+      local builtin = require("telescope.builtin")
+      vim.keymap.set("n", "<leader>t", builtin.find_files, {})
+      vim.keymap.set("n", "<leader>f", builtin.live_grep, {})
+      vim.keymap.set("n", "<leader>b", builtin.buffers, {})
+      vim.keymap.set("n", "<leader>h", builtin.help_tags, {})
 
       -- Treesitter: parsers are on runtimepath via Nix.
       -- Neovim 0.11+ enables highlighting automatically for known filetypes.
