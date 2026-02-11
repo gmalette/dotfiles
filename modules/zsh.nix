@@ -17,6 +17,10 @@
     shellAliases = {
       vi = "nvim";
       vim = "nvim";
+      ls = "eza";
+      ll = "eza -l";
+      la = "eza -la";
+      lt = "eza --tree";
     };
 
     history = {
@@ -107,5 +111,11 @@
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;  # caches nix shells so they load fast
   };
 }

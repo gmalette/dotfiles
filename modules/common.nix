@@ -7,6 +7,7 @@
     bat
     delta
     zoxide
+    eza
     jq
     curl
     htop
