@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+FLAKE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+
+# Determine host config (default: work-mac)
+HOST="${1:-work-mac}"
+
+# Get GitHub token for flake fetches
+TOKEN=""
+if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
+  TOKEN=$(gh auth token 2>/dev/null || true)
+fi
+
+if [ -n "$TOKEN" ]; then
+  export NIX_CONFIG="access-tokens = github.com=$TOKEN"
+fi
+
+echo "Switching to $HOST..."
+nix run home-manager -- switch --flake "$FLAKE_DIR#$HOST"
+echo "Done. Run 'exec zsh' to reload your shell."
