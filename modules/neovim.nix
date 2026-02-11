@@ -97,8 +97,8 @@
         end,
       })
 
-      -- Treesitter (parsers are on runtimepath via Nix, just enable features)
-      vim.treesitter.start()
+      -- Treesitter: parsers are on runtimepath via Nix.
+      -- Neovim 0.11+ enables highlighting automatically for known filetypes.
       vim.opt.foldmethod = "expr"
       vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
       vim.opt.foldenable = false
