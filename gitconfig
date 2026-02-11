@@ -1,15 +1,36 @@
 [core]
   editor = vim
   excludesfile = ~/.gitignore
-  pager = less -F -X
+  pager = delta
+  fsmonitor = true
+  commitgraph = true
+  writeCommitGraph = true
+[feature]
+    manyFiles = true
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+    navigate = true    # use n and N to move between diff sections
 [alias]
   ci = commit
   co = checkout
   st = status --short
-  clbr = !git branch --merged | rg --invert-match \"\\*|master|main\" | xargs git branch -d
+	clbr = "!f() { \\\n    git branch --merged origin/main | \\\n    rg --invert-match \"\\\\*|master|main\" | \\\n    xargs -r git branch -d; \\\n}; f"
   frob = !git rebase -i "$(git merge-base @ origin/main)"
   squash = !HEAD_COMMIT=$(git rev-list @ -n 1) BASE_COMMIT=$(git merge-base @ origin/main) && git reset --soft $BASE_COMMIT && git commit --reuse-message=$HEAD_COMMIT~$[$(git rev-list $BASE_COMMIT..$HEAD_COMMIT --count)-1] --edit
   amend = commit --amend -C @
+
+  # logs
+  llog = log --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --stat
+  slog = log --oneline --decorate
+
+  # Stack
+	push-stack = "!f() { \\\n    branches=$( \\\n        git log --reverse --ancestry-path origin/main..HEAD --format=\"%D\" | \\\n        awk -F\", \" \"{ \\\n            for(i=1; i<=NF; i++) { \\\n                gsub(/^[[:space:]]+|[[:space:]]+$/, \\\"\\\", \\$i); \\\n                if (\\$i ~ /^HEAD -> /) { \\\n                    sub(/^HEAD -> /, \\\"\\\", \\$i); \\\n                } \\\n                if (\\$i !~ /^origin\\\\// && \\$i !~ /^tag:/ && \\$i != \\\"\\\") { \\\n                    print \\$i; \\\n                    next; \\\n                } \\\n            } \\\n        }\" | \\\n        uniq | \\\n        tr \"\\\\n\" \" \" \\\n    ); \\\n    if [ -z \"$branches\" ]; then \\\n        echo \"No branches in the stack to push.\"; \\\n        return; \\\n    fi; \\\n    cmd=\"git push --force origin $branches\"; \\\n    echo \"About to run:\"; \\\n    echo \"$cmd\"; \\\n    echo \"CTRL+C to cancel...\"; \\\n    sleep 2; \\\n    eval \"$cmd\"; \\\n}; f"
+	show-stack = "!f() { \\\n    git log --ancestry-path origin/main..HEAD --format=\"%D%x01%s\" | \\\n    awk -F\"\\\\x01\" '\n        NF > 1 {\n            split($1, refs, \", \")\n            for (i in refs) {\n                gsub(/^[[:space:]]+|[[:space:]]+$/, \"\", refs[i])\n                if (refs[i] ~ /^HEAD -> /) {\n                    sub(/^HEAD -> /, \"\", refs[i])\n                }\n                if (refs[i] !~ /^origin\\// && refs[i] !~ /^tag:/ && refs[i] != \"\") {\n                    if (!seen[refs[i]]++) {\n                        branch_order[NR] = refs[i]\n                        branch_messages[refs[i]] = $2\n                    }\n                }\n            }\n        }\n        END {\n            max_len = 0\n            for (i in branch_messages) {\n                if (length(i) > max_len) {\n                    max_len = length(i)\n                }\n            }\n            green = \"\\033[32m\"\n            reset = \"\\033[0m\"\n            for (i = 1; i <= NR; i++) {\n                branch = branch_order[i]\n                if (branch in branch_messages) {\n                    printf \"%s%-\" max_len \"s%s  %s\\n\", green, branch, reset, branch_messages[branch]\n                }\n            }\n        }\n    ' | tac; \\\n}; f"
+	list-stacks = log --graph --oneline --decorate --branches --remotes --simplify-by-decoration --decorate-refs-exclude=refs/tags/* --decorate-refs-exclude=refs/prefetch/*
+	is-merged = "!f() { \\\n    branch_to_check=${1:-$(git rev-parse --abbrev-ref HEAD)}; \\\n    main_branch=\"origin/main\"; \\\n    # Create a temporary branch to safely perform a dry-run rebase\n    temp_branch=\"temp-rebase-check-$$\"; \\\n    git branch \"$temp_branch\" \"$branch_to_check\" >/dev/null 2>&1; \\\n    # Get the list of commits that would be dropped or applied in a rebase\n    rebase_output=$(git rebase --onto \"$main_branch\" \"$main_branch\" \"$temp_branch\" 2>&1); \\\n    # Clean up the temporary branch\n    git branch -D \"$temp_branch\" >/dev/null 2>&1; \\\n    # Check if the output contains \"Applying:\", which indicates unique commits\n    if echo \"$rebase_output\" | grep -q \"Applying:\"; then \\\n        count=$(echo \"$rebase_output\" | grep \"Applying:\" | wc -l | tr -d \" \"); \\\n        echo \"❌ Branch '$branch_to_check' has $count commit(s) after a rebase onto $main_branch.\"; \\\n        echo \"$rebase_output\" | grep \"Applying:\" | sed \"s/Applying: //\"; \\\n        exit \"$count\"; \\\n    else \\\n        echo \"✅ Branch '$branch_to_check' would have no commits after a rebase onto $main_branch.\"; \\\n        exit 0; \\\n    fi; \\\n}; f"
+	prune-merged-stacks = "!f() { \\\n    dry_run=false; \\\n    if [ \"$1\" = \"--dry-run\" ]; then \\\n        dry_run=true; \\\n        echo \"Dry run mode: Branches will be listed but not deleted.\"; \\\n    fi; \\\n    main_branch=\"origin/main\"; \\\n    current_branch=$(git rev-parse --abbrev-ref HEAD); \\\n    git for-each-ref --format=\"%(refname:short)\" refs/heads/ | while read branch; do \\\n        if [ \"$branch\" = \"main\" ] || [ \"$branch\" = \"master\" ] || [ \"$branch\" = \"$current_branch\" ]; then \\\n            continue; \\\n        fi; \\\n        unique_commits=$(git cherry -v \"$main_branch\" \"$branch\" 2>/dev/null | grep \"^+\"); \\\n        if [ -z \"$unique_commits\" ]; then \\\n            if [ \"$dry_run\" = true ]; then \\\n                echo \"Would delete branch '$branch' (fully merged).\"; \\\n            else \\\n                echo \"Deleting branch '$branch' (fully merged)...\"; \\\n                git branch -D \"$branch\"; \\\n            fi; \\\n        fi; \\\n    done; \\\n}; f"
+	prune-merged = "!f() { \\\n    dry_run=false; \\\n    if [ \"$1\" = \"--dry-run\" ]; then \\\n        dry_run=true; \\\n        echo \"Dry run mode: Branches will be listed but not deleted.\"; \\\n    fi; \\\n    current_branch=$(git rev-parse --abbrev-ref HEAD); \\\n    git for-each-ref --format=\"%(refname:short)\" refs/heads/ | while read branch; do \\\n        if [ \"$branch\" = \"main\" ] || [ \"$branch\" = \"master\" ] || [ \"$branch\" = \"$current_branch\" ]; then \\\n            continue; \\\n        fi; \\\n        if git is-merged \"$branch\" >/dev/null 2>&1; then \\\n            if [ \"$dry_run\" = true ]; then \\\n                echo \"Would delete branch '$branch' (merged).\"; \\\n            else \\\n                echo \"Deleting branch '$branch' (merged)...\"; \\\n                git branch -D \"$branch\"; \\\n            fi; \\\n        fi; \\\n    done; \\\n}; f"
 [branch]
   autosetuprebase = always
 [push]
@@ -27,8 +48,8 @@
 [diff]
   # compactionHeuristic = true
   noprefix = true
+  colorMoved = default
 [merge]
-  tool = Kaleidoscope
   conflictstyle = diff3
 [mergetool "Kaleidoscope"]
   cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
@@ -37,5 +58,25 @@
   prune = true
 [include]
 	path = /Users/gmalette/.config/dev/gitconfig
+	path = /Users/gmalette/.config/dev/gitconfig
+	path = /var/folders/tn/z902zksx7jxc1rvd9h_4zv8r0000gn/T/.tmp3Hq3VF/dev/gitconfig
+	path = /var/folders/tn/z902zksx7jxc1rvd9h_4zv8r0000gn/T/.tmpKJbwkV/dev/gitconfig
+	path = /Users/gmalette/.config/dev/gitconfig
+	path = /var/folders/tn/z902zksx7jxc1rvd9h_4zv8r0000gn/T/.tmpjnu1wV/dev/gitconfig
+	path = /Users/gmalette/.config/dev/gitconfig
 [commit]
 	template = ~/.gitmessage
+[rerere]
+	enabled = true
+[rebase]
+	updateRefs = true
+[init]
+	defaultBranch = main
+[maintenance]
+	repo = /Users/gmalette/world/trees/root/src
+	repo = /Users/gmalette/world/trees/serialization/src
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

@@ -7,3 +7,6 @@
 *.o
 *.rlib
 .idea
+.claude
+CLAUDE.md
+
