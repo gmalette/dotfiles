@@ -97,11 +97,11 @@
         end,
       })
 
-      -- Treesitter
-      require("nvim-treesitter.configs").setup({
-        highlight = { enable = true },
-        indent = { enable = true },
-      })
+      -- Treesitter (parsers are on runtimepath via Nix, just enable features)
+      vim.treesitter.start()
+      vim.opt.foldmethod = "expr"
+      vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+      vim.opt.foldenable = false
     '';
   };
 }
