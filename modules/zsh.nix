@@ -88,10 +88,15 @@
       nix_shell.disabled = true;
       docker_context.disabled = true;
 
+      character = {
+        success_symbol = "[;](bold green)";
+        error_symbol = "[;](bold red)";
+      };
+
       git_branch.style = "bold 220";
 
       custom.worldpath = {
-        command = "worldpath --full";
+        command = "worldpath";
         when = true;
         format = "[$output]($style) ";
         style = "bold cyan";
