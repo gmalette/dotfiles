@@ -11,6 +11,7 @@
     jq
     curl
     htop
+    buildkite-cli
   ];
 
   programs.home-manager.enable = true;
