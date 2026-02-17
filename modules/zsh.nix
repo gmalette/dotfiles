@@ -63,6 +63,13 @@
         "stty -ixon -ixoff 2>/dev/null"
       ]
       ++ lib.optionals hostCfg.isWork [
+        # Export Buildkite API token from bk.yaml so it survives direnv overriding XDG_CONFIG_HOME
+        ''
+        if [[ -f "$HOME/.config/bk.yaml" ]]; then
+          export BUILDKITE_API_TOKEN="$(${pkgs.yq-go}/bin/yq '.organizations.[].api_token' "$HOME/.config/bk.yaml" | head -1)"
+        fi
+        ''
+
         # Shopify dev tools
         ''
         [[ -f /opt/dev/dev.sh ]] && source /opt/dev/dev.sh
